@@ -1,0 +1,36 @@
+{
+  "lastChangelogVersion": "0.80.2",
+  "defaultProvider": "openrouter",
+  "defaultModel": "z-ai/glm-5.2",
+  "defaultThinkingLevel": "medium",
+  "packages": [
+    "npm:pi-mono-btw",
+    "npm:pi-mono-auto-fix",
+    "npm:pi-mono-ask-user-question",
+    "npm:pi-mono-loop",
+    "npm:pi-mono-usage",
+    "npm:pi-rewind-hook",
+    "npm:pi-autoresearch"
+  ],
+  "enabledModels": [
+    "anthropic/claude-fable-5",
+    "anthropic/claude-haiku-4-5",
+    "anthropic/claude-opus-4-7",
+    "anthropic/claude-opus-4-8",
+    "anthropic/claude-sonnet-4-6",
+    "parasail/moonshotai/Kimi-K2.5",
+    "parasail/deepseek-ai/DeepSeek-V4-Pro",
+    "parasail/deepseek-ai/DeepSeek-V4-Flash",
+    "parasail/Qwen/Qwen3-Coder-Next",
+    "parasail/zai-org/GLM-5",
+    "parasail/zai-org/GLM-5.2",
+    "pioneer/moonshotai/Kimi-K2.6",
+    "pioneer/mistral-medium-3.5",
+    "pioneer/zai-org/GLM-5.1",
+    "pioneer/deepseek-ai/DeepSeek-V4-Flash",
+    "pioneer/deepseek-ai/DeepSeek-V4-Pro",
+    "pioneer/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16",
+    "pioneer/zai-org/GLM-5.2"
+  ],
+  "theme": "dark"
+}

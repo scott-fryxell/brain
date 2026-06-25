@@ -1,0 +1,180 @@
+# Brain Sync Examples
+
+## Happy path: Routine sync with new skill
+
+**Scenario**: You created a new skill `brain-sync` and updated `copywriting` extension. Ready to release.
+
+**Agent detects**:
+
+```
+Changes found:
+- New skill: skills/brain-sync/SKILL.md (+ references/, ...)
+- Modified: extensions/copywriting/index.js
+- No changes to themes/, prompts/, sessions/
+```
+
+**Plan**:
+
+```
+Will copy: skills/ (new brain-sync included), extensions/ (copywriting updated)
+Excluding: .git/, .env, node_modules/, etc.
+Impact: 15 files added, 3 modified, 0 deleted
+```
+
+**User approves** → Agent copies files → **Validation passes** all checks
+
+**Git diff**:
+
+```
+skills/brain-sync/SKILL.md                  | 150 ++++++++
+skills/brain-sync/references/validation.md  | 60 +++
+skills/brain-sync/references/workflow.md    | 200 +++++++++
+extensions/copywriting/index.js             | 25 +-
+4 files changed, 434 insertions(+), 10 deletions(-)
+```
+
+**Proposed commit**:
+
+```
+Release: brain-sync + copywriting update
+
+- Added: brain-sync skill (copy changes, validate, commit to work/brain/)
+- Updated: copywriting extension (improved tone detection)
+- Synced: dev → work/brain/ for release
+
+Ready to tag v1.2.0
+```
+
+**User approves** → **Commit succeeds** → Ready to npm publish
+
+---
+
+## Validation failure: Secret leaked
+
+**Scenario**: You accidentally committed an API key to `skills/my-skill/.env` in dev.
+
+**Validation fails**:
+
+```
+✗ SECURITY: .env file found
+  Location: /brain/work/brain/skills/my-skill/.env
+
+Action: STOP - Do not commit. Secret file was copied.
+
+Steps:
+1. Fix: Delete work/brain/skills/my-skill/.env
+2. Delete: dev /brain/skills/my-skill/.env
+3. Commit secret removal to dev history
+4. Retry sync
+```
+
+**Agent output**:
+
+```
+ERROR: Secret file detected. Sync aborted.
+
+You have a .env in dev that should never be synced.
+Fix it in /brain/skills/my-skill/.env, then we'll retry.
+```
+
+---
+
+## Successful recovery: Nested .git directory stripped
+
+**Scenario**: You symlinked a submodule into `extensions/` and the copy caught nested .git dirs.
+
+**Validation initially fails**:
+
+```
+✗ Git corruption: .git directory found
+  Location: /brain/work/brain/extensions/my-submodule/.git
+```
+
+**Agent suggests**:
+
+```
+Nested repo detected in extensions/. This is expected for submodules in dev.
+The rsync command should have excluded it, but something went wrong.
+
+Check: ls -la /brain/extensions/my-submodule/
+If it has .git/, the exclude pattern didn't work.
+
+Options:
+1. Manually remove .git: rm -rf /brain/work/brain/extensions/my-submodule/.git
+2. Retry sync with stricter exclusion
+3. Skip this extension and investigate dev setup
+```
+
+**User removes the .git** → **Validation passes on retry** → **Sync continues**
+
+---
+
+## Multi-change sync with version bump
+
+**Scenario**: Several skills and one extension updated, plus package.json version bump for release.
+
+**Detected changes**:
+
+```
+Skills updated:
+  - test-javascript-patterns/SKILL.md
+  - vault/SKILL.md
+  - hyperframes/SKILL.md (major update)
+
+Extensions updated:
+  - html/index.js
+
+Configuration:
+  - package.json version 1.1.0 → 1.2.0
+```
+
+**Plan** (condensed):
+
+```
+Will sync: 4 skills, 1 extension, version bump
+Files: ~200 changed, 15 new
+Excluded: .git/, .env, node_modules/ (as always)
+Size impact: ~1.5 MB
+```
+
+**Diff shows**:
+
+```
+skills/test-javascript-patterns/SKILL.md  | 45 ++++----
+skills/vault/SKILL.md                      | 120 ++++++++++++++++++++
+skills/hyperframes/SKILL.md                | 300 ++++++++++++++++++++
+extensions/html/index.js                   | 80 +++++------
+package.json                               | 2 +-
+5 files changed, 485 insertions(+), 65 deletions(-)
+```
+
+**Proposed commit**:
+
+```
+Release v1.2.0: Skills + extension updates
+
+Skills:
+- test-javascript-patterns: improved coverage guidance
+- vault: PARA structure refinements
+- hyperframes: major API enhancements
+
+Extensions:
+- html: semantic element detection improvements
+
+Synced from dev → work/brain/
+```
+
+**User approves** → **Commit executes** → Git log shows:
+
+```
+abc1234 Release v1.2.0: Skills + extension updates
+def5678 Previous release v1.1.0
+```
+
+**Ready to tag and npm publish**:
+
+```bash
+cd /brain/work/brain/
+git tag v1.2.0
+npm publish
+```

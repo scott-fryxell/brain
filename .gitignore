@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Build artifacts
+dist/
+build/
+.next/
+
+# Secrets (never commit)
+.env
+.env.local
+.env.*.local
+
+# Personal context (machine-local AGENTS.md variant, loaded by
+# extensions/personal-context)
+AGENTS.local.md
+
+# Session logs - conversation transcripts, may contain secrets/personal info.
+# Kept in dev /brain only, never synced to the published repo.
+sessions/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo

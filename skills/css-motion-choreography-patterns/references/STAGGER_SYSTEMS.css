@@ -1,0 +1,54 @@
+:root {
+  --stagger-step-fast: 20ms;
+  --stagger-step-default: 32ms;
+  --stagger-step-slow: 48ms;
+  --stagger-max-items: 8;
+
+  --choreo-duration-enter: 220ms;
+  --choreo-duration-exit: 180ms;
+  --choreo-ease-enter: cubic-bezier(0.2, 0, 0, 1);
+  --choreo-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+}
+
+.motion-stagger > * {
+  --item-index: 0;
+  animation-delay: calc(var(--item-index) * var(--stagger-step-default));
+}
+
+.motion-stagger-fast > * {
+  animation-delay: calc(var(--item-index) * var(--stagger-step-fast));
+}
+
+.motion-stagger-slow > * {
+  animation-delay: calc(var(--item-index) * var(--stagger-step-slow));
+}
+
+@keyframes item-enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.motion-enter-item {
+  animation-name: item-enter-up;
+  animation-duration: var(--choreo-duration-enter);
+  animation-timing-function: var(--choreo-ease-enter);
+  animation-fill-mode: both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-stagger > *,
+  .motion-stagger-fast > *,
+  .motion-stagger-slow > * {
+    animation-delay: 0ms;
+  }
+
+  .motion-enter-item {
+    animation-duration: 1ms;
+  }
+}

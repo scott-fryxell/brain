@@ -1,0 +1,339 @@
+# GitHub repo topics/language -> PARA vault path
+# Order matters: first match wins (mirrors add-stars.sh logic)
+# - AI repos often have engineering topics too, so AI comes before engineering
+# - Language is the broadest fallback, checked last
+#
+# Default fallback: 03 Resources/GitHub Stars
+
+rules:
+  # --- Projects ---
+  - when:
+      topics: ["nature", "environment", "plants", "ecology", "gardening"]
+    path: "01 Projects/Nature"
+
+  - when:
+      topics: ["drawing", "illustration", "sketching", "ink", "pen"]
+    path: "01 Projects/Drawing"
+
+  - when:
+      topics: ["blog", "writing", "publishing"]
+    path: "01 Projects/Blog"
+
+  # --- Areas ---
+
+  # Music: topic or description match
+  - when:
+      topics:
+        [
+          "music",
+          "audio",
+          "synthesis",
+          "synth",
+          "midi",
+          "daw",
+          "music-production",
+          "sound",
+          "dsp",
+          "sampling",
+          "drum-machine",
+          "eurorack",
+          "modular",
+          "osc",
+        ]
+    path: "02 Areas/Music"
+
+  - when:
+      description_match:
+        [
+          "synth",
+          "ableton",
+          "daw",
+          "midi",
+          "vst",
+          "audio plugin",
+          "music",
+          "sampling",
+          "drum machine",
+        ]
+    path: "02 Areas/Music"
+
+  # Cyberpunks
+  - when:
+      topics:
+        [
+          "cyberpunk",
+          "politics",
+          "philosophy",
+          "critical-theory",
+          "surveillance",
+          "privacy",
+          "decentralization",
+          "dystopia",
+          "counter-culture",
+          "social-media",
+          "platform",
+        ]
+    path: "02 Areas/Cyberpunks"
+
+  - when:
+      description_match:
+        [
+          "cyberpunk",
+          "surveillance",
+          "privacy",
+          "decentralized",
+          "algorithmic",
+          "platform capitalism",
+        ]
+    path: "02 Areas/Cyberpunks"
+
+  # Writing
+  - when:
+      topics:
+        [
+          "writing",
+          "storytelling",
+          "narrative",
+          "fiction",
+          "nonfiction",
+          "essay",
+          "poetry",
+        ]
+    path: "02 Areas/Writing"
+
+  - when:
+      description_match: ["storytelling", "narrative", "fiction"]
+    path: "02 Areas/Storytelling"
+
+  # --- Resources ---
+
+  # AI/ML (before engineering)
+  - when:
+      topics:
+        [
+          "ai",
+          "llm",
+          "machine-learning",
+          "deep-learning",
+          "nlp",
+          "neural-network",
+          "transformer",
+          "embedding",
+          "rag",
+          "agent",
+          "autonomous",
+          "reasoning",
+          "gpt",
+          "claude",
+          "openai",
+          "anthropic",
+          "huggingface",
+        ]
+    path: "03 Resources/AI"
+
+  - when:
+      description_match:
+        [
+          "ai",
+          "llm",
+          "large language model",
+          "machine learning",
+          "deep learning",
+          "neural network",
+          "transformer",
+          "embedding",
+          "rag",
+          "agent",
+        ]
+    path: "03 Resources/AI"
+
+  # Engineering (topic match)
+  - when:
+      topics:
+        [
+          "engineering",
+          "programming",
+          "web",
+          "framework",
+          "library",
+          "compiler",
+          "database",
+          "devtools",
+          "cli",
+          "api",
+          "sdk",
+          "tooling",
+          "language",
+          "runtime",
+          "wasm",
+          "webassembly",
+          "backend",
+          "frontend",
+          "testing",
+          "ci",
+          "cd",
+          "git",
+          "version-control",
+          "editor",
+          "ide",
+          "plugin",
+          "infrastructure",
+          "cloud",
+          "serverless",
+          "container",
+          "kubernetes",
+          "networking",
+          "protocol",
+          "http",
+          "rest",
+          "graphql",
+          "grpc",
+          "websocket",
+          "streaming",
+          "realtime",
+        ]
+    path: "03 Resources/Engineering"
+
+  # Engineering (language fallback)
+  - when:
+      languages:
+        [
+          "Rust",
+          "TypeScript",
+          "JavaScript",
+          "Python",
+          "Go",
+          "Zig",
+          "C",
+          "C++",
+          "Java",
+          "Kotlin",
+          "Swift",
+          "Ruby",
+          "Elixir",
+          "Haskell",
+          "OCaml",
+          "Lua",
+          "Nim",
+          "Dart",
+          "Solidity",
+          "Shell",
+          "Makefile",
+          "Dockerfile",
+        ]
+      # Skip if topics suggest a different category
+      not_topics:
+        ["music", "audio", "art", "design", "writing", "math", "health"]
+    path: "03 Resources/Engineering"
+
+  # Other resources
+  - when:
+      topics:
+        [
+          "design",
+          "ui",
+          "ux",
+          "css",
+          "typography",
+          "color",
+          "layout",
+          "responsive",
+          "animation",
+          "motion",
+        ]
+    path: "03 Resources/Design"
+
+  - when:
+      topics:
+        [
+          "art",
+          "generative-art",
+          "generative",
+          "creative-coding",
+          "processing",
+          "three.js",
+          "webgl",
+          "shader",
+          "glsl",
+          "visual",
+          "graphics",
+          "rendering",
+          "ray-tracing",
+        ]
+    path: "03 Resources/Art"
+
+  - when:
+      topics:
+        [
+          "finance",
+          "investing",
+          "economics",
+          "trading",
+          "crypto",
+          "blockchain",
+          "defi",
+          "web3",
+        ]
+    path: "03 Resources/Finance"
+
+  - when:
+      topics:
+        [
+          "health",
+          "fitness",
+          "wellness",
+          "medicine",
+          "biology",
+          "neuroscience",
+          "psychology",
+          "mental-health",
+        ]
+    path: "03 Resources/Health"
+
+  - when:
+      topics:
+        [
+          "math",
+          "mathematics",
+          "algebra",
+          "geometry",
+          "calculus",
+          "statistics",
+          "probability",
+          "linear-algebra",
+        ]
+    path: "03 Resources/Math"
+
+  - when:
+      topics:
+        [
+          "manufacturing",
+          "hardware",
+          "cnc",
+          "3d-printing",
+          "laser",
+          "fabrication",
+          "electronics",
+          "arduino",
+          "raspberry-pi",
+          "embedded",
+          "iot",
+        ]
+    path: "03 Resources/Manufacturing"
+
+  - when:
+      topics:
+        [
+          "photography",
+          "camera",
+          "image-processing",
+          "computer-vision",
+          "exif",
+          "photo",
+        ]
+    path: "03 Resources/Art"
+
+  # Archive
+  - when:
+      topics: ["history", "anthropology", "archaeology", "sociology"]
+    path: "04 Archive/History"

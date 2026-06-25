@@ -1,0 +1,8 @@
+# slug	upload_url	commons_wiki	product_name
+# Curated fallbacks when SVGL has no match. Trademark may apply - see each wiki page.
+davinci-resolve	https://upload.wikimedia.org/wikipedia/commons/9/90/DaVinci_Resolve_17_logo.svg	https://commons.wikimedia.org/wiki/File:DaVinci_Resolve_17_logo.svg	DaVinci Resolve
+inkscape	https://upload.wikimedia.org/wikipedia/commons/0/0e/Inkscape_logo_2.svg	https://commons.wikimedia.org/wiki/File:Inkscape_logo_2.svg	Inkscape
+# App icon from Wikipedia infobox - https://en.wikipedia.org/wiki/Procreate_(software)
+procreate	https://upload.wikimedia.org/wikipedia/en/9/9b/Procreate_icon.png	https://en.wikipedia.org/wiki/File:Procreate_icon.png	Procreate
+# Apple Creator Studio icon; PNG only on Commons - see https://en.wikipedia.org/wiki/Final_Cut_Pro#/media/File:FinalCutProACS2026.png
+final-cut-pro	https://upload.wikimedia.org/wikipedia/commons/9/90/FinalCutProACS2026.png	https://commons.wikimedia.org/wiki/File:FinalCutProACS2026.png	Final Cut Pro

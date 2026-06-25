@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+root="$(cd "$(dirname "$0")/.." && pwd)"
+export PI_CODING_AGENT_DIR="$root"
+export PI_CODING_AGENT_SESSION_DIR="$root/sessions"
+
+node_ok() {
+  local ver major minor
+  ver="$("$1" -v 2>/dev/null)" || return 1
+  ver="${ver#v}"
+  IFS=. read -r major minor _ <<< "$ver"
+  (( major > 22 )) && return 0
+  (( major == 22 && minor >= 19 )) && return 0
+  return 1
+}
+
+best_node=""
+
+consider_node() {
+  [[ -n "$1" && -x "$1" ]] || return
+  node_ok "$1" && best_node="$1"
+}
+
+consider_node "$(command -v node 2>/dev/null)"
+
+if [[ -z "$best_node" ]]; then
+  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+  for nvm_sh in "$NVM_DIR/nvm.sh" "$(brew --prefix nvm 2>/dev/null)/nvm.sh"; do
+    [[ -s "$nvm_sh" ]] || continue
+    # shellcheck source=/dev/null
+    . "$nvm_sh"
+    consider_node "$(command -v node 2>/dev/null)"
+    [[ -n "$best_node" ]] && break
+  done
+fi
+
+if [[ -z "$best_node" ]]; then
+  for candidate in $(ls -1d "$HOME"/.nvm/versions/node/v*/bin/node 2>/dev/null | sort -Vr); do
+    consider_node "$candidate"
+    [[ -n "$best_node" ]] && break
+  done
+fi
+
+if [[ -z "$best_node" ]]; then
+  echo "pi needs Node >= 22.19 (current: $(node -v 2>/dev/null || echo missing))" >&2
+  echo "Fix: nvm install 24 && nvm use 24" >&2
+  exit 1
+fi
+
+export PATH="$(dirname "$best_node"):$PATH"
+
+local_cli="$root/node_modules/@earendil-works/pi-coding-agent/dist/cli.js"
+if [[ -f "$local_cli" ]]; then
+  exec "$best_node" "$local_cli" "$@"
+fi
+
+pi_bin="$(command -v pi 2>/dev/null)"
+if [[ -z "$pi_bin" ]]; then
+  echo "pi not found — run: npm install" >&2
+  exit 127
+fi
+
+exec "$pi_bin" "$@"

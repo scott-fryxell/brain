@@ -1,0 +1,42 @@
+{
+  "name": "@brain/agent",
+  "version": "1.0.0",
+  "description": "starting point for you digital brain",
+  "keywords": [
+    "pi-package"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions"
+    ],
+    "skills": [
+      "./skills"
+    ],
+    "prompts": [
+      "./prompts"
+    ],
+    "themes": [
+      "./themes"
+    ],
+    "sessions": [
+      "./sessions"
+    ]
+  },
+  "scripts": {
+    "brain": "./bin/pi",
+    "start": "npm run brain",
+    "pi:update": "./bin/pi update --extensions",
+    "pi:update-self": "./bin/pi update --self",
+    "pi:list": "./bin/pi list",
+    "feeds": "./skills/vault/rebuild-feeds.sh"
+  },
+  "license": "ISC",
+  "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "^0.80.2"
+  },
+  "packageManager": "npm@11.14.1"
+}
